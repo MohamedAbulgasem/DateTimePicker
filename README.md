@@ -20,6 +20,8 @@ An easy to use Date and Time picker that leverages the OS's Material
 
 #### Declaring dependency
 
+[ ![Download](https://api.bintray.com/packages/mohamedabulgasem/maven/datetimepicker/images/download.svg) ](https://bintray.com/mohamedabulgasem/maven/datetimepicker/_latestVersion)
+
 To add DateTimePicker, you must add the `DateTimePicker` Maven repository to
 your project.
 
@@ -47,7 +49,7 @@ DateTimePicker.Builder(this)
 
 ## License
 
-Copyright 2018 Mohamed Abulgasem
+Copyright © 2020 Mohamed Abulgasem
 
    Licensed under the Apache License v2, you may use this library in
    compliance with the License. A copy of the License can be obtained
