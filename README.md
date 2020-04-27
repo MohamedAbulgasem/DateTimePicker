@@ -1,5 +1,5 @@
 # DateTimePicker
----
+[ ![JCenter](https://api.bintray.com/packages/mohamedabulgasem/maven/datetimepicker/images/download.svg) ](https://bintray.com/mohamedabulgasem/maven/datetimepicker/_latestVersion)
 
 - [Introduction](#introduction)
   - [Requirements](#requirements)
@@ -19,11 +19,6 @@ An easy to use Date and Time picker that leverages the OS's Material
 ## Getting Started
 
 #### Declaring dependency
-
-[ ![Download](https://api.bintray.com/packages/mohamedabulgasem/maven/datetimepicker/images/download.svg) ](https://bintray.com/mohamedabulgasem/maven/datetimepicker/_latestVersion)
-
-To add DateTimePicker, you must add the `DateTimePicker` Maven repository to
-your project.
 
 Add the dependency in your app or module `build.gradle` file:
 
