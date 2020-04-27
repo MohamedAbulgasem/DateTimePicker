@@ -1,14 +1,14 @@
 # DateTimePicker
 [![Download](https://api.bintray.com/packages/mohamedabulgasem/maven/datetimepicker/images/download.svg)](https://bintray.com/mohamedabulgasem/maven/datetimepicker/_latestVersion)
 
-- [Introduction](#introduction)
+  - [Introduction](#introduction)
   - [Requirements](#requirements)
   - [Getting Started](#getting-started)
-    -   [Declaring dependency](#declaring-dependency)
-  - [Usage](#usage)
+    - [Declaring dependency](#declaring-dependency)
+    - [Usage](#usage)
   - [License](#license)
 
-# Introduction 
+## Introduction
 An easy to use Date and Time picker that leverages the OS's Material
 `DatePickerDialog` & `TimePickerDialog`
 
@@ -18,7 +18,7 @@ An easy to use Date and Time picker that leverages the OS's Material
 
 ## Getting Started
 
-#### Declaring dependency
+### Declaring dependency
 
 Add the dependency in your app or module `build.gradle` file:
 
@@ -28,7 +28,7 @@ dependencies {
 }
 ```
 
-## Usage
+### Usage
 
 Use DateTimePicker Builder to construct and show the picker.
 

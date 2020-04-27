@@ -13,7 +13,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName libraryVersion ?: "1.0.0"
+        versionName libraryVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -117,6 +117,7 @@ bintray {
         name = libraryName
         desc = libraryDescription
         websiteUrl = siteUrl
+        issueTrackerUrl = 'https://github.com/MohamedAbulgasem/DateTimePicker/issues'
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
         dryRun = false
