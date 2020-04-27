@@ -46,6 +46,6 @@ DateTimePicker.Builder(this)
 
 Copyright © 2020 Mohamed Abulgasem
 
-   Licensed under the Apache License v2, you may use this library in
+   Licensed under the Apache v2 License, you may use this library in
    compliance with the License. A copy of the License can be obtained
    [here](http://www.apache.org/licenses/LICENSE-2.0).
