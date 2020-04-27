@@ -13,7 +13,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "0.1.0"
+        versionName libraryVersion ?: "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -49,30 +49,14 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
-}
-
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'datetimepicker'
-
-    libraryName = 'datetimepicker'
-    publishedGroupId = 'com.mohamedabulgasem'
-    artifact = 'datetimepicker'
-
-    libraryDescription = 'An easy to use date and time picker.'
-
-    siteUrl = 'https://github.com/MohamedAbulgasem/DateTimePicker'
-    gitUrl = 'https://github.com/MohamedAbulgasem/DateTimePicker.git'
-
-    libraryVersion = '0.1.0'
-
-    developerId = 'mohamedabulgasem'
-    developerName = 'Mohamed Abulgasem'
-    developerEmail = 'algiriany93@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    ext {
+        libraryVersion = '0.2.0'
+        libraryName = 'datetimepicker'
+        publishedGroupId = 'com.mohamedabulgasem'
+        libraryDescription = 'An easy to use date and time picker.'
+        siteUrl = 'https://github.com/MohamedAbulgasem/DateTimePicker'
+        gitUrl = 'https://github.com/MohamedAbulgasem/DateTimePicker.git'
+    }
 }
 
 group = publishedGroupId
@@ -83,7 +67,7 @@ install {
         pom.project {
             packaging 'aar'
             groupId publishedGroupId
-            artifactId artifact
+            artifactId libraryName
 
             name libraryName
             description libraryDescription
@@ -91,15 +75,15 @@ install {
 
             licenses {
                 license {
-                    name licenseName
-                    url licenseUrl
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                 }
             }
             developers {
                 developer {
-                    id developerId
-                    name developerName
-                    email developerEmail
+                    id 'mohamedabulgasem'
+                    name 'Mohamed Abulgasem'
+                    email 'algiriany93@gmail.com'
                 }
             }
             scm {
@@ -129,12 +113,12 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        repo = bintrayRepo
-        name = bintrayName
+        repo = 'maven'
+        name = libraryName
         desc = libraryDescription
         websiteUrl = siteUrl
         vcsUrl = gitUrl
-        licenses = allLicenses
+        licenses = ["Apache-2.0"]
         dryRun = false
         publish = true
         override = false

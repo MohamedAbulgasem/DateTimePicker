@@ -1,5 +1,5 @@
 # DateTimePicker
-[ ![JCenter](https://api.bintray.com/packages/mohamedabulgasem/maven/datetimepicker/images/download.svg) ](https://bintray.com/mohamedabulgasem/maven/datetimepicker/_latestVersion)
+[![Download](https://api.bintray.com/packages/mohamedabulgasem/maven/datetimepicker/images/download.svg)](https://bintray.com/mohamedabulgasem/maven/datetimepicker/_latestVersion)
 
 - [Introduction](#introduction)
   - [Requirements](#requirements)
@@ -24,7 +24,7 @@ Add the dependency in your app or module `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation 'com.mohamedabulgasem:datetimepicker:0.1.0'
+    implementation 'com.mohamedabulgasem:datetimepicker:0.2.0'
 }
 ```
 
@@ -36,7 +36,7 @@ Use DateTimePicker Builder to construct and show the picker.
 // Pass activity reference to Builder and set your OnDateTimeSetListener
 DateTimePicker.Builder(this)
     .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
-        setDateAndTime(year, month, dayOfMonth, hourOfDay, minute)
+        // Use selected date and time values
     }
     .build()
     .show()
