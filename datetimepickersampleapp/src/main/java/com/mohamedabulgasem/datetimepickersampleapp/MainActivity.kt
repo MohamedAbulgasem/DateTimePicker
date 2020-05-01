@@ -17,8 +17,17 @@ class MainActivity : AppCompatActivity() {
                 .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
                     setDateAndTime(year, month, dayOfMonth, hourOfDay, minute)
                 }
-                .onShowListener { /* Optionally set code to run onShow */ }
-                .onDismissListener { /* Optionally set code to run onDismiss */ }
+                .is24HourView(true)
+                .initialValues(
+                    initialYear = 2021,
+                    initialMonth = 5,
+                    initialDay = 19,
+                    initialHour = 18,
+                    initialMinute = 30
+                )
+                .minDate(System.currentTimeMillis())
+                .onShowListener { /* Optionally run some code when the dialog is shown */ }
+                .onDismissListener { /* Optionally run some code when the dialog is dismissed */ }
                 .build()
                 .show()
         }

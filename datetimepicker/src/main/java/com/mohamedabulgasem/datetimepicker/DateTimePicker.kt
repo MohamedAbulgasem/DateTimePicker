@@ -1,72 +1,31 @@
 package com.mohamedabulgasem.datetimepicker
 
-import android.app.*
-import android.app.DatePickerDialog.OnDateSetListener
-import android.app.TimePickerDialog.*
+import androidx.annotation.*
 import androidx.fragment.app.*
+import com.mohamedabulgasem.datetimepicker.internal.DateTimePickerImpl
+import com.mohamedabulgasem.datetimepicker.models.*
 import java.util.*
 
-class DateTimePicker private constructor(
-    private val context: FragmentActivity,
-    private var onDateTimeSetListener: OnDateTimeSetListener? = null,
-    private var onShowListener: OnShowListener? = null,
-    private var onDismissListener: OnDismissListener? = null
-) {
+interface DateTimePicker {
 
-    private var datePickerDialog: DatePickerDialog? = null
-    private var timePickerDialog: TimePickerDialog? = null
+    fun show()
+    fun dismiss()
+    fun isShowing(): Boolean
 
-    fun show() {
-        showDatePicker(
-            OnDateSetListener { _, year, month, dayOfMonth ->
-                showTimePicker(
-                    OnTimeSetListener { _, hourOfDay, minute ->
-                        onDateTimeSetListener?.invoke(
-                            year, month, dayOfMonth, hourOfDay, minute
-                        )
-                    }
-                )
-            }
-        )
-    }
+    class Builder(internal val context: FragmentActivity) {
 
-    private fun showDatePicker(listener: OnDateSetListener) {
-        if (datePickerDialog == null) {
-            datePickerDialog = DatePickerDialog(
-                context,
-                listener,
-                initialYear,
-                initialMonth,
-                initialDay
-            ).apply {
-                setOnShowListener { onShowListener?.invoke() }
-                setOnDismissListener { onDismissListener?.invoke() }
-            }
-        }
-        datePickerDialog?.show()
-    }
-
-    private fun showTimePicker(listener: OnTimeSetListener) {
-        if (timePickerDialog == null) {
-            timePickerDialog = TimePickerDialog(
-                context,
-                listener,
-                initialHour,
-                initialMinute,
-                true
-            ).apply {
-                setOnDismissListener { onDismissListener?.invoke() }
-            }
-        }
-        timePickerDialog?.show()
-    }
-
-    data class Builder(
-        private val context: FragmentActivity,
-        private var onDateTimeSetListener: OnDateTimeSetListener? = null,
-        private var onShowListener: OnShowListener? = null,
-        private var onDismissListener: OnDismissListener? = null
-    ) {
+        internal var onDateTimeSetListener: OnDateTimeSetListener? = null
+        internal var onShowListener: OnShowListener? = null
+        internal var onDismissListener: OnDismissListener? = null
+        internal var themeResId: Int = 0
+        internal var initialYear: Int = Calendar.getInstance()[Calendar.YEAR]
+        internal var initialMonth: Int = Calendar.getInstance()[Calendar.MONTH]
+        internal var initialDay: Int = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
+        internal var initialHour: Int = 0
+        internal var initialMinute: Int = 0
+        internal var is24HourView: Boolean = true
+        internal var maxDate: Long? = null
+        internal var minDate: Long? = null
 
         fun onDateTimeSetListener(listener: OnDateTimeSetListener) = apply {
             this.onDateTimeSetListener = listener
@@ -80,27 +39,38 @@ class DateTimePicker private constructor(
             this.onDismissListener = listener
         }
 
-        fun build() = DateTimePicker(
-            context,
-            onDateTimeSetListener,
-            onShowListener,
-            onDismissListener
-        )
+        fun theme(@StyleRes themeResId: Int) = apply {
+            this.themeResId = themeResId
+        }
+
+        fun initialValues(
+            initialYear: Int = this.initialYear,
+            initialMonth: Int = this.initialMonth,
+            initialDay: Int = this.initialDay,
+            initialHour: Int = this.initialHour,
+            initialMinute: Int = this.initialMinute
+        ) = apply {
+            this.initialYear = initialYear
+            this.initialMonth = initialMonth
+            this.initialDay = initialDay
+            this.initialHour = initialHour
+            this.initialMinute = initialMinute
+        }
+
+        fun is24HourView(is24HourView: Boolean) = apply {
+            this.is24HourView = is24HourView
+        }
+
+        fun maxDate(maxDate: Long) = apply {
+            this.maxDate = maxDate
+        }
+
+        fun minDate(minDate: Long) = apply {
+            this.minDate = minDate
+        }
+
+        fun build(): DateTimePicker = DateTimePickerImpl(this)
 
     }
+
 }
-
-typealias OnDateTimeSetListener = (Int, Int, Int, Int, Int) -> Unit
-typealias OnShowListener = () -> Unit
-typealias OnDismissListener = () -> Unit
-
-private val initialYear: Int
-    get() = Calendar.getInstance().get(Calendar.YEAR)
-private val initialMonth: Int
-    get() = Calendar.getInstance().get(Calendar.MONTH)
-private val initialDay: Int
-    get() = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-private val initialHour: Int
-    get() = 0
-private val initialMinute: Int
-    get() = 0
