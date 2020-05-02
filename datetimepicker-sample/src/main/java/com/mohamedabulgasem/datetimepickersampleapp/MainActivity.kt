@@ -9,45 +9,22 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private var dateTimePicker: DateTimePicker? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        button.setOnClickListener {
-            DateTimePicker.Builder(this)
-                .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
-                    setAppointment(year, month, dayOfMonth, hourOfDay, minute)
-                }
-                .is24HourView(true)
-                .initialValues(
-                    initialYear = 2021,
-                    initialMonth = 5,
-                    initialDay = 19,
-                    initialHour = 18,
-                    initialMinute = 30
-                )
-                .minDate(System.currentTimeMillis())
-                .maxDate(
-                    maxYear = 2022,
-                    maxMonth = 0,
-                    maxDay = 22
-                )
-                .onShowListener { /* Optionally run some code when the picker is shown */ }
-                .onDismissListener { /* Optionally run some code when the picker is dismissed */ }
-                .build()
-                .show()
-        }
+        title = "Appointment details"
+        button.setOnClickListener { showDateTimePicker() }
     }
 
-    private var dateTimePicker: DateTimePicker? = null
-
-    fun showDateTimePicker() {
+    private fun showDateTimePicker() {
         if (dateTimePicker == null) {
             dateTimePicker = DateTimePicker.Builder(this)
                 // Set a listener to be invoked with selected date and time values upon user completion.
                 // NB: month is zero-based, Jan is 0; Dec is 11.
                 .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
-                    setAppointment(year, month, dayOfMonth, hourOfDay, minute)
+                    scheduleAppointment(year, month, dayOfMonth, hourOfDay, minute)
                 }
                 // Optionally run some code when the picker is shown.
                 .onShowListener { highlightAppointmentView(true) }
@@ -56,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 // Apply custom theme styling to the picker.
                 // By default, the picker uses the consumer app theme values
                 // and mostly makes use of the colorAccent.
-                .theme(R.style.DateTimePickerTheme)
+                //.theme(R.style.DateTimePickerTheme)
                 // Set some or all initial picker date and time values.
                 // By default, initialYear, initialMonth and initialDay are set to the current date;
                 // initialHour and initialMinute are set to zero.
@@ -71,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 .initialValues(Calendar.getInstance())
                 // Indicate whether to use a 24 hour or 12 hour AM/PM view for the time picker.
                 // By default, a 24 hour view is set.
-                .is24HourView(false)
+                //.is24HourView(false)
                 // Optionally set a minimum date supported by the picker in milliseconds
                 // or by specifying date values.
                 .minDate(System.currentTimeMillis())
@@ -89,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     fun highlightAppointmentView(highlight: Boolean) {}
 
-    private fun setAppointment(
+    private fun scheduleAppointment(
         year: Int,
         month: Int,
         dayOfMonth: Int,
@@ -105,5 +82,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun show(text: String) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    private fun show(text: String) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+
 }

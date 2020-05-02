@@ -7,8 +7,8 @@ package com.mohamedabulgasem.datetimepicker.models
  */
 typealias OnDateTimeSetListener = (Int, Int, Int, Int, Int) -> Unit
 
-/** Function allows running some code when the dialog is shown. */
+/** Function allows running some code when the picker is shown. */
 typealias OnShowListener = () -> Unit
 
-/** Function allows running some code when the dialog is dismissed. */
+/** Function allows running some code when the picker is dismissed. */
 typealias OnDismissListener = () -> Unit

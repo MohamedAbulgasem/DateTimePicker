@@ -7,24 +7,20 @@ import com.mohamedabulgasem.datetimepicker.*
 import com.mohamedabulgasem.datetimepicker.models.*
 
 internal class DateTimePickerImpl(
-    private val pickerProps: PickerProperties
+    private val viewmodel: PickerViewModel
 ) : DateTimePicker {
 
     private var datePickerDialog: DatePickerDialog? = null
     private var timePickerDialog: TimePickerDialog? = null
 
     override fun show() {
-        showDatePicker(
-            OnDateSetListener { _, year, month, dayOfMonth ->
-                showTimePicker(
-                    OnTimeSetListener { _, hourOfDay, minute ->
-                        pickerProps.onDateTimeSetListener?.invoke(
-                            year, month, dayOfMonth, hourOfDay, minute
-                        )
-                    }
+        showDatePicker(OnDateSetListener { _, year, month, dayOfMonth ->
+            showTimePicker(OnTimeSetListener { _, hourOfDay, minute ->
+                viewmodel.onDateTimeSetListener?.invoke(
+                    year, month, dayOfMonth, hourOfDay, minute
                 )
-            }
-        )
+            })
+        })
     }
 
     override fun dismiss() {
@@ -33,23 +29,24 @@ internal class DateTimePickerImpl(
     }
 
     override fun isShowing(): Boolean {
-        return datePickerDialog?.isShowing == true || timePickerDialog?.isShowing == true
+        return datePickerDialog?.isShowing == true ||
+                timePickerDialog?.isShowing == true
     }
 
     private fun showDatePicker(listener: OnDateSetListener) {
         if (datePickerDialog == null) {
             datePickerDialog = DatePickerDialog(
-                pickerProps.context,
-                pickerProps.themeResId,
+                viewmodel.context,
+                viewmodel.themeResId,
                 listener,
-                pickerProps.initialYear,
-                pickerProps.initialMonth,
-                pickerProps.initialDay
+                viewmodel.initialYear,
+                viewmodel.initialMonth,
+                viewmodel.initialDay
             ).apply {
-                setOnShowListener { pickerProps.onShowListener?.invoke() }
-                setOnCancelListener { pickerProps.onDismissListener?.invoke() }
-                pickerProps.maxDate?.let { datePicker.maxDate = it }
-                pickerProps.minDate?.let { datePicker.minDate = it }
+                setOnShowListener { viewmodel.onShowListener?.invoke() }
+                setOnCancelListener { viewmodel.onDismissListener?.invoke() }
+                viewmodel.maxDate?.let { datePicker.maxDate = it }
+                viewmodel.minDate?.let { datePicker.minDate = it }
             }
         }
         datePickerDialog?.show()
@@ -58,14 +55,14 @@ internal class DateTimePickerImpl(
     private fun showTimePicker(listener: OnTimeSetListener) {
         if (timePickerDialog == null) {
             timePickerDialog = TimePickerDialog(
-                pickerProps.context,
-                pickerProps.themeResId,
+                viewmodel.context,
+                viewmodel.themeResId,
                 listener,
-                pickerProps.initialHour,
-                pickerProps.initialMinute,
-                pickerProps.is24HourView
+                viewmodel.initialHour,
+                viewmodel.initialMinute,
+                viewmodel.is24HourView
             ).apply {
-                setOnDismissListener { pickerProps.onDismissListener?.invoke() }
+                setOnDismissListener { viewmodel.onDismissListener?.invoke() }
             }
         }
         timePickerDialog?.show()

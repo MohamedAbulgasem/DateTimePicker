@@ -17,24 +17,24 @@ interface DateTimePicker {
     /** Whether the picker is currently showing. */
     fun isShowing(): Boolean
 
-    /** Builder used to construct and display the picker. */
+    /** Builder used to construct the picker. */
     class Builder(context: FragmentActivity) {
 
-        private val pickerProps = PickerProperties(context)
+        private val viewmodel = PickerViewModel(context)
 
         /** Set a listener to be invoked with selected date and time values upon user completion */
         fun onDateTimeSetListener(listener: OnDateTimeSetListener) = apply {
-            pickerProps.onDateTimeSetListener = listener
+            viewmodel.onDateTimeSetListener = listener
         }
 
         /** Set a listener to be invoked when the picker is shown. */
         fun onShowListener(listener: OnShowListener) = apply {
-            pickerProps.onShowListener = listener
+            viewmodel.onShowListener = listener
         }
 
         /** Set a listener to be invoked when the picker is dismissed. */
         fun onDismissListener(listener: OnDismissListener) = apply {
-            pickerProps.onDismissListener = listener
+            viewmodel.onDismissListener = listener
         }
 
         /**
@@ -43,7 +43,7 @@ interface DateTimePicker {
          * and mostly makes use of the colorAccent.
          */
         fun theme(@StyleRes themeResId: Int) = apply {
-            pickerProps.themeResId = themeResId
+            viewmodel.themeResId = themeResId
         }
 
         /** Set initial picker date and time values from a Calendar instance. */
@@ -70,11 +70,11 @@ interface DateTimePicker {
             initialHour: Int? = null,
             initialMinute: Int? = null
         ) = apply {
-            initialYear?.let { pickerProps.initialYear = it }
-            initialMonth?.let { pickerProps.initialMonth = it }
-            initialDay?.let { pickerProps.initialDay = it }
-            initialHour?.let { pickerProps.initialHour = it }
-            initialMinute?.let { pickerProps.initialMinute = it }
+            initialYear?.let { viewmodel.initialYear = it }
+            initialMonth?.let { viewmodel.initialMonth = it }
+            initialDay?.let { viewmodel.initialDay = it }
+            initialHour?.let { viewmodel.initialHour = it }
+            initialMinute?.let { viewmodel.initialMinute = it }
         }
 
         /**
@@ -82,7 +82,7 @@ interface DateTimePicker {
          * By default, the time picker is set to use a 24 hour view.
          */
         fun is24HourView(is24HourView: Boolean) = apply {
-            pickerProps.is24HourView = is24HourView
+            viewmodel.is24HourView = is24HourView
         }
 
         /**
@@ -103,7 +103,7 @@ interface DateTimePicker {
 
         /** Set a maximum date supported by the picker in milliseconds. */
         fun maxDate(maxDate: Long) = apply {
-            pickerProps.maxDate = maxDate
+            viewmodel.maxDate = maxDate
         }
 
         /**
@@ -124,11 +124,11 @@ interface DateTimePicker {
 
         /** Set a minimum date supported by the picker in milliseconds. */
         fun minDate(minDate: Long) = apply {
-            pickerProps.minDate = minDate
+            viewmodel.minDate = minDate
         }
 
-        /** Construct and return an instance of DateTimePicker with the specified properties */
-        fun build(): DateTimePicker = DateTimePickerImpl(pickerProps)
+        /** Construct and return an instance of DateTimePicker with the specified configuration */
+        fun build(): DateTimePicker = DateTimePickerImpl(viewmodel)
 
     }
 

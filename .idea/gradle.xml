@@ -11,7 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/datetimepicker" />
-            <option value="$PROJECT_DIR$/datetimepickersampleapp" />
+            <option value="$PROJECT_DIR$/datetimepicker-sample" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

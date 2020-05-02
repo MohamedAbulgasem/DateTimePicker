@@ -11,12 +11,14 @@
 
 ## Introduction
 An easy to use Date and Time picker that leverages the OS's Material
-`DatePickerDialog` & `TimePickerDialog`
+`DatePickerDialog` & `TimePickerDialog`.
+
+![](static/datepicker_screenshot.png)  |  ![](static/timepicker_screenshot.png)
 
 ## Requirements
 
-- AndroidX
-- minSdkVersion 21
+- AndroidX Compatibility
+- Minimum SDK Version 21
 
 ## Getting Started
 
@@ -36,7 +38,7 @@ Use DateTimePicker Builder to construct and show the picker:
 
 ```kotlin
 // Pass activity reference to Builder and set your OnDateTimeSetListener
-DateTimePicker.Builder(this)
+DateTimePicker.Builder(context)
     .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
         // Use selected date and time values
     }
@@ -61,10 +63,8 @@ fun showDateTimePicker() {
                 scheduleAppointment(year, month, dayOfMonth, hourOfDay, minute)
             }
             
-            // Optionally run some code when the picker is shown.
+            // Optionally run some code when the picker is shown/dismissed.
             .onShowListener { highlightAppointmentView(true) }
-            
-            // Optionally run some code when the picker is dismissed.
             .onDismissListener { highlightAppointmentView(false) }
             
             // Apply custom theme styling to the picker.
@@ -88,7 +88,7 @@ fun showDateTimePicker() {
             // By default, a 24 hour view is set.
             .is24HourView(false)
             
-            // Optionally specify minimum and/or maximum date supported by the 
+            // Optionally specify minimum/maximum date supported by the 
             // picker in milliseconds or by specifying date values.
             .minDate(System.currentTimeMillis())
             .maxDate(
@@ -97,7 +97,6 @@ fun showDateTimePicker() {
                 maxDay = 31
             )
  
-            // Construct DateTimePicker instance with the specified configuration.
             .build()
     }
     dateTimePicker?.show()
@@ -106,8 +105,16 @@ fun showDateTimePicker() {
 
 ## License
 
-Copyright © 2020 Mohamed Abulgasem
+    Copyright 2020 Mohamed Abulgasem
 
-   Licensed under the Apache License v 2.0. You may use this library in
-   compliance with the License. A copy of the License can be obtained
-   [here](http://www.apache.org/licenses/LICENSE-2.0).
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

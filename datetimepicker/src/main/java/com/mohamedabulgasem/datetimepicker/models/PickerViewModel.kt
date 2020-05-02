@@ -3,7 +3,7 @@ package com.mohamedabulgasem.datetimepicker.models
 import androidx.fragment.app.*
 import java.util.*
 
-internal data class PickerProperties(
+internal class PickerViewModel(
     val context: FragmentActivity
 ) {
     var onDateTimeSetListener: OnDateTimeSetListener? = null

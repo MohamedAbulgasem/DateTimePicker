@@ -1,44 +1,26 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName libraryVersion
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    dataBinding {
-        enabled true
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
 buildscript {
@@ -63,34 +45,31 @@ group = publishedGroupId
 version = libraryVersion
 
 install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging 'aar'
-            groupId publishedGroupId
-            artifactId libraryName
+    repositories.mavenInstaller.pom.project {
+        name libraryName
+        description libraryDescription
+        packaging 'aar'
+        url siteUrl
+        groupId publishedGroupId
+        artifactId libraryName
 
-            name libraryName
-            description libraryDescription
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+        }
+        developers {
+            developer {
+                id 'mohamedabulgasem'
+                name 'Mohamed Abulgasem'
+                email 'algiriany93@gmail.com'
+            }
+        }
+        scm {
             url siteUrl
-
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                }
-            }
-            developers {
-                developer {
-                    id 'mohamedabulgasem'
-                    name 'Mohamed Abulgasem'
-                    email 'algiriany93@gmail.com'
-                }
-            }
-            scm {
-                connection gitUrl
-                developerConnection gitUrl
-                url siteUrl
-            }
+            connection gitUrl
+            developerConnection gitUrl
         }
     }
 }
@@ -107,11 +86,14 @@ artifacts {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
+// Configure gradle-bintray-plugin (for publishing releases)
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
 
     configurations = ['archives']
+    publish = true
+
     pkg {
         repo = 'maven'
         name = libraryName
@@ -121,7 +103,6 @@ bintray {
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
         dryRun = false
-        publish = true
         override = false
         publicDownloadNumbers = true
         version {
