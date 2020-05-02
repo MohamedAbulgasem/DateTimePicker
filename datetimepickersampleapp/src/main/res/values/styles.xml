@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DateTimePickerTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="textColorAlertDialogListItem">@android:color/white</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
 </resources>

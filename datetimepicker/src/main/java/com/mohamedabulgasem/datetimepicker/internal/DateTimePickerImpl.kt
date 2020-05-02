@@ -3,12 +3,12 @@ package com.mohamedabulgasem.datetimepicker.internal
 import android.app.*
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog.OnTimeSetListener
-import androidx.fragment.app.*
 import com.mohamedabulgasem.datetimepicker.*
-import com.mohamedabulgasem.datetimepicker.DateTimePicker.*
 import com.mohamedabulgasem.datetimepicker.models.*
 
-internal class DateTimePickerImpl(private val builder: Builder) : DateTimePicker {
+internal class DateTimePickerImpl(
+    private val pickerProps: PickerProperties
+) : DateTimePicker {
 
     private var datePickerDialog: DatePickerDialog? = null
     private var timePickerDialog: TimePickerDialog? = null
@@ -18,7 +18,7 @@ internal class DateTimePickerImpl(private val builder: Builder) : DateTimePicker
             OnDateSetListener { _, year, month, dayOfMonth ->
                 showTimePicker(
                     OnTimeSetListener { _, hourOfDay, minute ->
-                        builder.onDateTimeSetListener?.invoke(
+                        pickerProps.onDateTimeSetListener?.invoke(
                             year, month, dayOfMonth, hourOfDay, minute
                         )
                     }
@@ -39,17 +39,17 @@ internal class DateTimePickerImpl(private val builder: Builder) : DateTimePicker
     private fun showDatePicker(listener: OnDateSetListener) {
         if (datePickerDialog == null) {
             datePickerDialog = DatePickerDialog(
-                builder.context,
-                builder.themeResId,
+                pickerProps.context,
+                pickerProps.themeResId,
                 listener,
-                builder.initialYear,
-                builder.initialMonth,
-                builder.initialDay
+                pickerProps.initialYear,
+                pickerProps.initialMonth,
+                pickerProps.initialDay
             ).apply {
-                setOnShowListener { builder.onShowListener?.invoke() }
-                setOnCancelListener { builder.onDismissListener?.invoke() }
-                builder.maxDate?.let { datePicker.maxDate = it }
-                builder.minDate?.let { datePicker.minDate = it }
+                setOnShowListener { pickerProps.onShowListener?.invoke() }
+                setOnCancelListener { pickerProps.onDismissListener?.invoke() }
+                pickerProps.maxDate?.let { datePicker.maxDate = it }
+                pickerProps.minDate?.let { datePicker.minDate = it }
             }
         }
         datePickerDialog?.show()
@@ -58,14 +58,14 @@ internal class DateTimePickerImpl(private val builder: Builder) : DateTimePicker
     private fun showTimePicker(listener: OnTimeSetListener) {
         if (timePickerDialog == null) {
             timePickerDialog = TimePickerDialog(
-                builder.context,
-                builder.themeResId,
+                pickerProps.context,
+                pickerProps.themeResId,
                 listener,
-                builder.initialHour,
-                builder.initialMinute,
-                builder.is24HourView
+                pickerProps.initialHour,
+                pickerProps.initialMinute,
+                pickerProps.is24HourView
             ).apply {
-                setOnDismissListener { builder.onDismissListener?.invoke() }
+                setOnDismissListener { pickerProps.onDismissListener?.invoke() }
             }
         }
         timePickerDialog?.show()

@@ -8,68 +8,127 @@ import java.util.*
 
 interface DateTimePicker {
 
+    /** Display the picker on screen. */
     fun show()
+
+    /** Dismiss/remove the picker from screen. */
     fun dismiss()
+
+    /** Whether the picker is currently showing. */
     fun isShowing(): Boolean
 
-    class Builder(internal val context: FragmentActivity) {
+    /** Builder used to construct and display the picker. */
+    class Builder(context: FragmentActivity) {
 
-        internal var onDateTimeSetListener: OnDateTimeSetListener? = null
-        internal var onShowListener: OnShowListener? = null
-        internal var onDismissListener: OnDismissListener? = null
-        internal var themeResId: Int = 0
-        internal var initialYear: Int = Calendar.getInstance()[Calendar.YEAR]
-        internal var initialMonth: Int = Calendar.getInstance()[Calendar.MONTH]
-        internal var initialDay: Int = Calendar.getInstance()[Calendar.DAY_OF_MONTH]
-        internal var initialHour: Int = 0
-        internal var initialMinute: Int = 0
-        internal var is24HourView: Boolean = true
-        internal var maxDate: Long? = null
-        internal var minDate: Long? = null
+        private val pickerProps = PickerProperties(context)
 
+        /** Set a listener to be invoked with selected date and time values upon user completion */
         fun onDateTimeSetListener(listener: OnDateTimeSetListener) = apply {
-            this.onDateTimeSetListener = listener
+            pickerProps.onDateTimeSetListener = listener
         }
 
+        /** Set a listener to be invoked when the picker is shown. */
         fun onShowListener(listener: OnShowListener) = apply {
-            this.onShowListener = listener
+            pickerProps.onShowListener = listener
         }
 
+        /** Set a listener to be invoked when the picker is dismissed. */
         fun onDismissListener(listener: OnDismissListener) = apply {
-            this.onDismissListener = listener
+            pickerProps.onDismissListener = listener
         }
 
+        /**
+         * Apply custom theme styling to the picker.
+         * By default, the picker uses the consumer app theme values
+         * and mostly makes use of the colorAccent.
+         */
         fun theme(@StyleRes themeResId: Int) = apply {
-            this.themeResId = themeResId
+            pickerProps.themeResId = themeResId
         }
 
+        /** Set initial picker date and time values from a Calendar instance. */
+        fun initialValues(calendar: Calendar) = apply {
+            initialValues(
+                calendar[Calendar.YEAR],
+                calendar[Calendar.MONTH],
+                calendar[Calendar.DAY_OF_MONTH],
+                calendar[Calendar.HOUR_OF_DAY],
+                calendar[Calendar.MINUTE]
+            )
+        }
+
+        /**
+         * Set initial picker date and time values.
+         * By default, initialYear, initialMonth and initialDay are set to the current date;
+         * initialHour and initialMinute are set to zero.
+         * NB: month is zero-based, Jan is 0; Dec is 11.
+         */
         fun initialValues(
-            initialYear: Int = this.initialYear,
-            initialMonth: Int = this.initialMonth,
-            initialDay: Int = this.initialDay,
-            initialHour: Int = this.initialHour,
-            initialMinute: Int = this.initialMinute
+            initialYear: Int? = null,
+            initialMonth: Int? = null,
+            initialDay: Int? = null,
+            initialHour: Int? = null,
+            initialMinute: Int? = null
         ) = apply {
-            this.initialYear = initialYear
-            this.initialMonth = initialMonth
-            this.initialDay = initialDay
-            this.initialHour = initialHour
-            this.initialMinute = initialMinute
+            initialYear?.let { pickerProps.initialYear = it }
+            initialMonth?.let { pickerProps.initialMonth = it }
+            initialDay?.let { pickerProps.initialDay = it }
+            initialHour?.let { pickerProps.initialHour = it }
+            initialMinute?.let { pickerProps.initialMinute = it }
         }
 
+        /**
+         * Indicate whether to use a 24 hour view or AM/PM for the time picker.
+         * By default, the time picker is set to use a 24 hour view.
+         */
         fun is24HourView(is24HourView: Boolean) = apply {
-            this.is24HourView = is24HourView
+            pickerProps.is24HourView = is24HourView
         }
 
+        /**
+         * Set a maximum date supported by the picker.
+         * NB: month is zero-based, Jan is 0; Dec is 11.
+         */
+        fun maxDate(
+            maxYear: Int,
+            maxMonth: Int,
+            maxDay: Int
+        ) = apply {
+            maxDate(
+                Calendar.getInstance().apply {
+                    set(maxYear, maxMonth, maxDay)
+                }.timeInMillis
+            )
+        }
+
+        /** Set a maximum date supported by the picker in milliseconds. */
         fun maxDate(maxDate: Long) = apply {
-            this.maxDate = maxDate
+            pickerProps.maxDate = maxDate
         }
 
+        /**
+         * Set a minimum date supported by the picker.
+         * NB: month is zero-based, Jan is 0; Dec is 11.
+         */
+        fun minDate(
+            minYear: Int,
+            minMonth: Int,
+            minDay: Int
+        ) = apply {
+            minDate(
+                Calendar.getInstance().apply {
+                    set(minYear, minMonth, minDay)
+                }.timeInMillis
+            )
+        }
+
+        /** Set a minimum date supported by the picker in milliseconds. */
         fun minDate(minDate: Long) = apply {
-            this.minDate = minDate
+            pickerProps.minDate = minDate
         }
 
-        fun build(): DateTimePicker = DateTimePickerImpl(this)
+        /** Construct and return an instance of DateTimePicker with the specified properties */
+        fun build(): DateTimePicker = DateTimePickerImpl(pickerProps)
 
     }
 
