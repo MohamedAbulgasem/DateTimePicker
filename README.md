@@ -97,7 +97,7 @@ fun showDateTimePicker() {
                 maxDay = 31
             )
  
-            // Construct DateTimePicker instance the specified configuration.
+            // Construct DateTimePicker instance with the specified configuration.
             .build()
     }
     dateTimePicker?.show()
