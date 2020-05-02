@@ -22,7 +22,7 @@ An easy to use Date and Time picker that leverages the OS's Material
 
 ### Declaring dependency
 
-Add the dependency in your app or module `build.gradle` file:
+Add the dependency to your app or module `build.gradle` file:
 
 ```gradle
 dependencies {
@@ -58,7 +58,7 @@ fun showDateTimePicker() {
             // Set a listener to be invoked with selected date and time values.
             // Note: month is zero-based, Jan is 0; Dec is 11.
             .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
-                setAppointment(year, month, dayOfMonth, hourOfDay, minute)
+                scheduleAppointment(year, month, dayOfMonth, hourOfDay, minute)
             }
             
             // Optionally run some code when the picker is shown.
