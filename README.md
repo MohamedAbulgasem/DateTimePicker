@@ -56,7 +56,7 @@ fun showDateTimePicker() {
         dateTimePicker = DateTimePicker.Builder(this)
         
             // Set a listener to be invoked with selected date and time values.
-            // NB: month is zero-based, Jan is 0; Dec is 11.
+            // Note: month is zero-based, Jan is 0; Dec is 11.
             .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
                 setAppointment(year, month, dayOfMonth, hourOfDay, minute)
             }
@@ -72,7 +72,7 @@ fun showDateTimePicker() {
             // and mostly makes use of the colorAccent.
             .theme(R.style.DateTimePickerTheme)
             
-            // Set some or all initial picker date and time values.
+            // Set initial picker date and time values.
             // By default, initialYear, initialMonth and initialDay are set to the current date;
             // initialHour and initialMinute are set to zero.
             .initialValues(
@@ -101,7 +101,7 @@ fun showDateTimePicker() {
                 maxDay = 31
             )
  
-            /** Construct an instance of DateTimePicker with the specified properties */
+            // Construct an instance of DateTimePicker with the specified properties.
             .build()
     }
     dateTimePicker?.show()
