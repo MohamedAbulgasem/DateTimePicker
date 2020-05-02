@@ -32,7 +32,7 @@ dependencies {
 
 ### Usage
 
-Use DateTimePicker Builder to construct and show the picker.
+Use DateTimePicker Builder to construct and show the picker:
 
 ```kotlin
 // Pass activity reference to Builder and set your OnDateTimeSetListener
@@ -46,7 +46,7 @@ DateTimePicker.Builder(this)
 
 ### Configuration
 
-Set any of the available optional properties.
+Additional configuration options:
 
 ```kotlin
 private var dateTimePicker: DateTimePicker? = null
@@ -72,9 +72,10 @@ fun showDateTimePicker() {
             // and mostly makes use of the colorAccent.
             .theme(R.style.DateTimePickerTheme)
             
-            // Set initial picker date and time values.
-            // By default, initialYear, initialMonth and initialDay are set to the current date;
-            // initialHour and initialMinute are set to zero.
+            // Set initial picker date and time from a Calendar instance 
+            // or by directly specifying the values.
+            // By default, initialYear, initialMonth and initialDay are set 
+            // to the current date; initialHour and initialMinute are set to zero.
             .initialValues(
                 initialYear = 2021,
                 initialMonth = 0,
@@ -82,26 +83,21 @@ fun showDateTimePicker() {
                 initialHour = 14,
                 initialMinute = 30
             )
-            // OR set initial values from a Calendar instance.
-            .initialValues(Calendar.getInstance())
             
             // Indicate whether to use a 24 hour or 12 hour AM/PM view for the time picker.
             // By default, a 24 hour view is set.
             .is24HourView(false)
             
-            // Optionally set a minimum date supported by the picker in milliseconds
-            // or by specifying date values.
+            // Optionally specify minimum and/or maximum date supported by the 
+            // picker in milliseconds or by specifying date values.
             .minDate(System.currentTimeMillis())
-            
-            // Optionally set a maximum date supported by the picker in milliseconds
-            // or by specifying date values.
             .maxDate(
                 maxYear = 2022,
                 maxMonth = 11,
                 maxDay = 31
             )
  
-            // Construct an instance of DateTimePicker with the specified properties.
+            // Construct DateTimePicker instance the specified configuration.
             .build()
     }
     dateTimePicker?.show()
