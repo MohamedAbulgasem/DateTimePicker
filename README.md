@@ -13,7 +13,9 @@
 An easy to use Date and Time picker that leverages the OS's Material
 `DatePickerDialog` & `TimePickerDialog`.
 
-![](static/datepicker_screenshot.png)  |  ![](static/timepicker_screenshot.png)
+![](static/datepicker_screenshot.png) .
+![](static/timepicker_clock_screenshot.png) .
+![](static/timepicker_input_screenshot.png)
 
 ## Requirements
 
