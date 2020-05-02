@@ -15,7 +15,8 @@ An easy to use Date and Time picker that leverages the OS's Material
 
 ## Requirements
 
-- Minimum SDK Version 21
+- AndroidX
+- minSdkVersion 21
 
 ## Getting Started
 
@@ -45,7 +46,7 @@ DateTimePicker.Builder(this)
 
 ### Configuration
 
-Configure any of the available optional properties.
+Set any of the available optional properties.
 
 ```kotlin
 private var dateTimePicker: DateTimePicker? = null
@@ -53,19 +54,24 @@ private var dateTimePicker: DateTimePicker? = null
 fun showDateTimePicker() {
     if (dateTimePicker == null) {
         dateTimePicker = DateTimePicker.Builder(this)
-            // Set a listener to be invoked with selected date and time values upon user completion.
+        
+            // Set a listener to be invoked with selected date and time values.
             // NB: month is zero-based, Jan is 0; Dec is 11.
             .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
                 setAppointment(year, month, dayOfMonth, hourOfDay, minute)
             }
+            
             // Optionally run some code when the picker is shown.
             .onShowListener { highlightAppointmentView(true) }
+            
             // Optionally run some code when the picker is dismissed.
             .onDismissListener { highlightAppointmentView(false) }
+            
             // Apply custom theme styling to the picker.
             // By default, the picker uses the consumer app theme values 
             // and mostly makes use of the colorAccent.
             .theme(R.style.DateTimePickerTheme)
+            
             // Set some or all initial picker date and time values.
             // By default, initialYear, initialMonth and initialDay are set to the current date;
             // initialHour and initialMinute are set to zero.
@@ -78,12 +84,15 @@ fun showDateTimePicker() {
             )
             // OR set initial values from a Calendar instance.
             .initialValues(Calendar.getInstance())
+            
             // Indicate whether to use a 24 hour or 12 hour AM/PM view for the time picker.
             // By default, a 24 hour view is set.
             .is24HourView(false)
+            
             // Optionally set a minimum date supported by the picker in milliseconds
             // or by specifying date values.
             .minDate(System.currentTimeMillis())
+            
             // Optionally set a maximum date supported by the picker in milliseconds
             // or by specifying date values.
             .maxDate(
@@ -91,6 +100,8 @@ fun showDateTimePicker() {
                 maxMonth = 11,
                 maxDay = 31
             )
+ 
+            /** Construct an instance of DateTimePicker with the specified properties */
             .build()
     }
     dateTimePicker?.show()
