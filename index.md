@@ -1,37 +1,121 @@
-## Welcome to GitHub Pages
+# DateTimePicker
+[![Download](https://api.bintray.com/packages/mohamedabulgasem/maven/datetimepicker/images/download.svg)](https://bintray.com/mohamedabulgasem/maven/datetimepicker/_latestVersion)
 
-You can use the [editor on GitHub](https://github.com/MohamedAbulgasem/DateTimePicker/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+  - [Introduction](#introduction)
+  - [Requirements](#requirements)
+  - [Getting Started](#getting-started)
+    - [Declaring dependency](#declaring-dependency)
+    - [Usage](#usage)
+    - [Configuration](#configuration)
+  - [License](#license)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Introduction
+An easy to use Date and Time picker that leverages the OS's Material
+`DatePickerDialog` & `TimePickerDialog`.
 
-### Markdown
+![](static/datepicker_screenshot.png) .
+![](static/timepicker_clock_screenshot.png) .
+![](static/timepicker_input_screenshot.png)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Requirements
 
-```markdown
-Syntax highlighted code block
+- AndroidX Compatibility
 
-# Header 1
-## Header 2
-### Header 3
+## Getting Started
 
-- Bulleted
-- List
+### Declaring dependency
 
-1. Numbered
-2. List
+Add the dependency to your app or module `build.gradle` file:
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```gradle
+dependencies {
+    implementation 'com.mohamedabulgasem:datetimepicker:1.1.0'
+}
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Usage
 
-### Jekyll Themes
+Use DateTimePicker Builder to construct and show the picker:
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/MohamedAbulgasem/DateTimePicker/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```kotlin
+// Pass activity reference to Builder and set your OnDateTimeSetListener
+DateTimePicker.Builder(context)
+    .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
+        // Use selected date and time values
+    }
+    .build()
+    .show()
+```
 
-### Support or Contact
+### Configuration
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+Additional configuration options:
+
+```kotlin
+private var dateTimePicker: DateTimePicker? = null
+
+fun showDateTimePicker() {
+    if (dateTimePicker == null) {
+        dateTimePicker = DateTimePicker.Builder(this)
+        
+            // Set a listener to be invoked with selected date and time values.
+            // Note: month is zero-based, Jan is 0; Dec is 11.
+            .onDateTimeSetListener { year, month, dayOfMonth, hourOfDay, minute ->
+                scheduleAppointment(year, month, dayOfMonth, hourOfDay, minute)
+            }
+            
+            // Optionally run some code when the picker is shown/dismissed.
+            .onShowListener { highlightAppointmentView(true) }
+            .onDismissListener { highlightAppointmentView(false) }
+            
+            // Apply custom theme styling to the picker.
+            // By default, the picker uses the consumer app theme values 
+            // and mostly makes use of the colorAccent.
+            .theme(R.style.DateTimePickerTheme)
+            
+            // Set initial picker date and time from a Calendar instance 
+            // or by directly specifying the values.
+            // By default, initialYear, initialMonth and initialDay are set 
+            // to the current date; initialHour and initialMinute are set to zero.
+            .initialValues(
+                initialYear = 2021,
+                initialMonth = 0,
+                initialDay = 1,
+                initialHour = 14,
+                initialMinute = 30
+            )
+            
+            // Indicate whether to use a 24 hour or 12 hour AM/PM view for the time picker.
+            // By default, a 24 hour view is set.
+            .is24HourView(false)
+            
+            // Optionally specify minimum/maximum date supported by the 
+            // picker in milliseconds or by specifying date values.
+            .minDate(System.currentTimeMillis())
+            .maxDate(
+                maxYear = 2022,
+                maxMonth = 11,
+                maxDay = 31
+            )
+ 
+            .build()
+    }
+    dateTimePicker?.show()
+}
+```
+
+## License
+
+    Copyright 2020 Mohamed Abulgasem
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
