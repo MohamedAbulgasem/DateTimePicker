@@ -16,8 +16,6 @@ An easy to use Date and Time picker that leverages the OS's Material
 ![](datepicker_screenshot.png)
 &nbsp;
 ![](timepicker_clock_screenshot.png)
-&nbsp;
-![](timepicker_input_screenshot.png)
 
 ## Requirements
 
