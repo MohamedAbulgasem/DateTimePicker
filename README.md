@@ -29,7 +29,7 @@ Add the dependency to your app or module `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation 'com.mohamedabulgasem:datetimepicker:1.1.0'
+    implementation 'com.mohamedabulgasem:datetimepicker:1.1.1'
 }
 ```
 
