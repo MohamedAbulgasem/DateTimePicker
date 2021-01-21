@@ -53,17 +53,15 @@ internal class DateTimePickerImpl(
     }
 
     private fun showTimePicker(listener: OnTimeSetListener) {
-        if (timePickerDialog == null) {
-            timePickerDialog = TimePickerDialog(
-                viewmodel.context,
-                viewmodel.themeResId,
-                listener,
-                viewmodel.initialHour,
-                viewmodel.initialMinute,
-                viewmodel.is24HourView
-            ).apply {
-                setOnDismissListener { viewmodel.onDismissListener?.invoke() }
-            }
+        timePickerDialog = TimePickerDialog(
+            viewmodel.context,
+            viewmodel.themeResId,
+            listener,
+            viewmodel.initialHour,
+            viewmodel.initialMinute,
+            viewmodel.is24HourView
+        ).apply {
+            setOnDismissListener { viewmodel.onDismissListener?.invoke() }
         }
         timePickerDialog?.show()
     }
